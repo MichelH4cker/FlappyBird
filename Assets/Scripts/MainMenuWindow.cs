@@ -6,6 +6,7 @@ using CodeMonkey.Utils;
 public class MainMenuWindow : MonoBehaviour {
     
     private void Awake() {
+
         transform.Find("PlayButton").GetComponent<Button_UI>().ClickFunc = () => {
             Loader.Load(Loader.Scene.GameScene);
         };
