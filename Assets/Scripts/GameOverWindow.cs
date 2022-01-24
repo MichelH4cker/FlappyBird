@@ -8,9 +8,12 @@ using CodeMonkey.Utils;
 public class GameOverWindow : MonoBehaviour {
 
     private Text scoreText;
+    private Text highscoreText;
 
     private void Awake () {
         scoreText = transform.Find("ScoreText").GetComponent<Text>();
+        highscoreText = transform.Find("HighscoreText").GetComponent<Text>();
+
         
         transform.Find("RetryButton").GetComponent<Button_UI>().ClickFunc = () => {  
             Loader.Load(Loader.Scene.GameScene);
@@ -31,6 +34,12 @@ public class GameOverWindow : MonoBehaviour {
 
     private void Bird_OnDied(object sender, System.EventArgs e) {
         scoreText.text = Level.GetInstance().GetPipePassedCount().ToString();
+
+        if (Level.GetInstance().GetPipePassedCount() >= Score.GetHighscore()) {
+            highscoreText.text = "NEW HIGHSCORE!";
+        } else {
+            highscoreText.text = "HIGHSCORE " + Score.GetHighscore().ToString();
+        }
         Show();
     }
 
