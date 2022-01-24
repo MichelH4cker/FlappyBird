@@ -31,7 +31,6 @@ public class Bird : MonoBehaviour {
         instance = this;
         birdRigidBody2D = GetComponent<Rigidbody2D>();
         birdRigidBody2D.bodyType = RigidbodyType2D.Static;
-
     }
 
     private void Update() {
@@ -48,7 +47,7 @@ public class Bird : MonoBehaviour {
                 break;
             case State.Playing: 
                 if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetMouseButtonDown(0))) {
-                    Jump();            
+                    Jump();  
                 }
                 break;
             case State.Dead: 
@@ -60,10 +59,13 @@ public class Bird : MonoBehaviour {
 
     private void Jump() {
         birdRigidBody2D.velocity = Vector2.up * JUMP_AMOUNT; 
+        SoundManager.PlaySound(SoundManager.Sound.BirdJump);          
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
         birdRigidBody2D.bodyType = RigidbodyType2D.Static;
+        SoundManager.PlaySound(SoundManager.Sound.Lose);
         if (OnDied != null) OnDied(this, EventArgs.Empty);
     }
 }

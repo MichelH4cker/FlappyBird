@@ -112,6 +112,7 @@ public class Level : MonoBehaviour {
 
             if (isToTheRightOfBird && isToTheLeftOfBird && pipe.IsBottom()) {
                 // PIPE PASSED BIRD
+                SoundManager.PlaySound(SoundManager.Sound.  Score);//tocar
                 pipePassedCount++;
             }
 
