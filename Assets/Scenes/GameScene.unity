@@ -1880,6 +1880,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameAssets
       objectReference: {fileID: 0}
+    - target: {fileID: 1798741707705342316, guid: ea35fddbdb86ffd3ba9c31d2750d9509, type: 3}
+      propertyPath: pfCloud_1
+      value: 
+      objectReference: {fileID: 3819817128430438172, guid: 6fed6a3541019a340abdbef3367f6d38, type: 3}
+    - target: {fileID: 1798741707705342316, guid: ea35fddbdb86ffd3ba9c31d2750d9509, type: 3}
+      propertyPath: pfCloud_2
+      value: 
+      objectReference: {fileID: 8191181626055232024, guid: 98befe43601662b65b80faedbdc34516, type: 3}
+    - target: {fileID: 1798741707705342316, guid: ea35fddbdb86ffd3ba9c31d2750d9509, type: 3}
+      propertyPath: pfCloud_3
+      value: 
+      objectReference: {fileID: 8360935375737220388, guid: 72c5e7f11f21a0a6f800600a24e1fe2f, type: 3}
     - target: {fileID: 1798741707705342317, guid: ea35fddbdb86ffd3ba9c31d2750d9509, type: 3}
       propertyPath: m_RootOrder
       value: 1
