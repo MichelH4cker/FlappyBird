@@ -17,19 +17,23 @@ public class Level : MonoBehaviour {
     private const float PIPE_MOVE_SPEED = 30f;
     private const float PIPE_DESTROY_X_POSITION = -100f;
     private const float PIPE_SPAWN_X_POSITION = +100f;
+    private const float CLOUD_DESTROY_X_POSITION = -160f;
+    private const float CLOUD_SPAWN_X_POSITION = +160f;
+    private const float CLOUD_SPAWN_Y_POSITION = +30f;
     private const float GROUND_DESTROY_X_POSITION = -200f;
-    private const float GROUND_SPAWN_X_POSITION = +100f;
     private const float BIRD_X_POSITION = 0f;
 
-    private List<Transform> groundList;
-    private List<Pipe> pipeList;
-    
+    private float cloudSpawnTimer;
     private float pipeSpawnTimer;
     private float pipeSpawnTimerMax;
     private float gapSize;
 
     private int pipePassedCount;
     private int pipeSpawned;
+    
+    private List<Transform> groundList;
+    private List<Transform> cloudList;
+    private List<Pipe> pipeList;
 
     private State state;
 
@@ -49,6 +53,7 @@ public class Level : MonoBehaviour {
     private void Awake() {
         instance = this;
         SpawnInitalGround();
+        SpawnInitialClouds();
         pipeList = new List<Pipe>();
         pipeSpawnTimerMax = 2f;
         gapSize = 20f;
@@ -75,6 +80,52 @@ public class Level : MonoBehaviour {
             HandlePipeMovement();
             HandlePipeSpawning();   
             HandleGround();
+            HandleClouds();
+        }
+    }
+
+    private void SpawnInitialClouds() {
+        cloudList = new List<Transform>();
+        Transform cloudTransform;
+
+        cloudTransform = Instantiate(GetCloudPrefabTransform(), new Vector3(0, CLOUD_SPAWN_Y_POSITION, 0), Quaternion.identity);
+        cloudList.Add(cloudTransform);
+    }
+
+    private Transform GetCloudPrefabTransform() {
+        switch (Random.Range(0, 3)) {
+            default:
+            case 0: return GameAssets.GetInstance().pfCloud_1; 
+            case 1: return GameAssets.GetInstance().pfCloud_2;
+            case 2: return GameAssets.GetInstance().pfCloud_3;
+        }
+    }
+
+    private void HandleClouds() {
+        // Handle clouds spawning
+        cloudSpawnTimer -= Time.deltaTime;
+        if (cloudSpawnTimer < 0) {
+            // Time to spawn another cloud
+            float cloudSpawnTimerMax = 5f;
+
+            cloudSpawnTimer = cloudSpawnTimerMax;
+            Transform cloudTransform = Instantiate(GetCloudPrefabTransform(), new Vector3(CLOUD_SPAWN_X_POSITION, CLOUD_SPAWN_Y_POSITION, 0), Quaternion.identity);
+            cloudList.Add(cloudTransform);
+        }
+
+        // Handle clouds moving
+        for (int i = 0; i < cloudList.Count; i++) {
+            Transform cloudTransform = cloudList[i];
+
+            // Move clouds by less speed than pipes for Parallax
+            cloudTransform.position += new Vector3(-1, 0, 0) * PIPE_MOVE_SPEED * Time.deltaTime * .7f; 
+
+            if(cloudTransform.position.x < CLOUD_DESTROY_X_POSITION) {
+                // Cloud past destroy point, destroy self
+                Destroy(cloudTransform.gameObject);
+                cloudList.RemoveAt(i);
+                i--;
+            }
         }
     }
 
@@ -123,7 +174,7 @@ public class Level : MonoBehaviour {
             pipeSpawnTimer += pipeSpawnTimerMax;
 
             float totalHeight = 2 * CAMERA_ORTOGRPAHIC_SIZE;
-            float heightEdgeLimit = 10f;
+            float heightEdgeLimit = 15f;
 
             float minHeight = (gapSize * .5f) + heightEdgeLimit;
             float maxHeight = totalHeight - (gapSize * .5f) - heightEdgeLimit;
@@ -171,15 +222,15 @@ public class Level : MonoBehaviour {
     private void setDifficulty(Difficulty difficulty) {
         switch (difficulty) {
             case Difficulty.Easy:
-                gapSize = 50f;
+                gapSize = 35f;
                 pipeSpawnTimerMax = 2f;
                 break;
             case Difficulty.Medium:
-                gapSize = 40f;
+                gapSize = 30f;
                 pipeSpawnTimerMax = 1.9f;
                 break;
             case Difficulty.Hard:
-                gapSize = 30f;
+                gapSize = 25f;
                 pipeSpawnTimerMax = 1.8f;
                 break;
             case Difficulty.Impossible:
