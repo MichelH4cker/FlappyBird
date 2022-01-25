@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798741707705342306}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -24.6, y: -3.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -46,6 +46,7 @@ MonoBehaviour:
   PipeHeadSprite: {fileID: 21300000, guid: 165625e1f34d18e419d1c11d5ac1e5c6, type: 3}
   pfPipeHead: {fileID: 1531408898504788376, guid: 863e0cfab3940c0fb8656cbe48bef5c1, type: 3}
   pfPipeBody: {fileID: 1898060626847078823, guid: e9702b747e32badb6a170814fce35954, type: 3}
+  pfGround: {fileID: 4989766876593424274, guid: 8dd51be51cb1388ba9edb03a5bd1937b, type: 3}
   BirdJump: {fileID: 8300000, guid: 98180c6e462e607418d56d13fd9ec3ca, type: 3}
   soundAudioClipArray:
   - sound: 0

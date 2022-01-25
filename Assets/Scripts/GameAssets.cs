@@ -17,6 +17,7 @@ public class GameAssets : MonoBehaviour {
     public Sprite PipeHeadSprite;
     public Transform pfPipeHead;
     public Transform pfPipeBody;
+    public Transform pfGround;
 
     public AudioClip BirdJump;
 
